@@ -83,7 +83,7 @@ class Indexer:
         return indexer
 
     def save(self, file):
-        with open(file, 'w') as f:
+        with open(file, 'w',encoding='utf-8') as f:
             for symbol, index in self.w2id.items():
                 if index < self.n_spec:
                     continue
@@ -92,7 +92,7 @@ class Indexer:
     @classmethod
     def load(cls, file):
         indexer = cls()
-        with open(file) as f:
+        with open(file,encoding='utf-8') as f:
             for line in f:
                 symbol = line.rstrip()
                 assert len(symbol) > 0, 'Empty symbol encountered.'
@@ -177,7 +177,7 @@ class Vocab(RobustIndexer):
             else:
                 log('filtered words:\n' + ' '.join(filtered))
             if dump_filtered:
-                with open(dump_filtered, 'w') as f:
+                with open(dump_filtered, 'w', encoding='utf-8') as f:
                     for name in filtered:
                         f.write(f'{name} {counter.get(name)}\n')
 
@@ -189,7 +189,7 @@ class Vocab(RobustIndexer):
     @staticmethod
     def load_embedding_vocab(file, lower):
         wv_vocab = set()
-        with open(file) as f:
+        with open(file,encoding='utf-8') as f:
             for line in f:
                 token = line.rstrip().split(' ')[0]
                 if lower:
@@ -218,7 +218,7 @@ class Vocab(RobustIndexer):
     }
 
     def save(self, file):
-        with open(file, 'w') as f:
+        with open(file, 'w', encoding='utf-8') as f:
             for symbol, index in self.w2id.items():
                 if index < self.n_spec:
                     continue
@@ -229,7 +229,7 @@ class Vocab(RobustIndexer):
     def load(cls, file):
         vocab = cls()
         reverse_char_map = {v: k for k, v in cls.char_map.items()}
-        with open(file) as f:
+        with open(file, encoding='utf-8') as f:
             for line in f:
                 symbol = line.rstrip('\n')
                 symbol = reverse_char_map.get(symbol, symbol)
