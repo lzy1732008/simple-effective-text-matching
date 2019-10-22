@@ -245,7 +245,7 @@ class Model:
 
         model_vars = {re.match("^(.*):\\d+$", var.name).group(1): var for var in tf.global_variables()}
         assignment_map = {name: model_vars[name] for name, _ in init_vars if name in model_vars}
-        tf.train.init_from_checkpoint(model_path, assignment_map)
+        tf.train.init_from_checkpoint('models/wsfx/benchmark-0', assignment_map)
         sess.run(tf.global_variables_initializer())
         return model, checkpoint
 
