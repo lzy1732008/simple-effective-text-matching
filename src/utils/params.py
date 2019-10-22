@@ -89,7 +89,7 @@ def _load_param(root, file: str):
     print('file:', file)
     if not file.endswith('.json5'):
         file += '.json5'
-    with open(file) as f:
+    with open(file, encoding='utf-8') as f:
         config = json5.load(f)
         return config
 
