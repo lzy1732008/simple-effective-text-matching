@@ -85,6 +85,8 @@ def _add_param(args, x: dict):
 
 def _load_param(root, file: str):
     file = os.path.join(root, file)
+    print('root: ', root)
+    print('file:', file)
     if not file.endswith('.json5'):
         file += '.json5'
     with open(file) as f:

@@ -8,5 +8,5 @@
     eval_warmup_samples: 0,
     save_all: true,
     sort_by_len: true,
-    pretrained_embeddings: 'resources/glove.6B.300d.txt',
+    pretrained_embeddings: 'resources/vectors.txt',
 }

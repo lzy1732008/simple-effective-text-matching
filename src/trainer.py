@@ -48,6 +48,7 @@ class Trainer:
             with sess.as_default():
                 model, interface, states = self.build_model(sess)
                 train_batches = interface.pre_process(train)
+                print('train_batches shape:{}'.format(np.array(train_batches).shape))
                 dev_batches = interface.pre_process(dev, training=False)
                 self.log('setup complete: {}s.'.format(str(datetime.now() - start_time).split(".")[0]))
                 try:
@@ -109,6 +110,7 @@ class Trainer:
         model = Model(self.args, sess)
         sess.run(tf.global_variables_initializer())
         embeddings = interface.load_embeddings()
+        assert len(embeddings) == self.args.num_vocab, ValueError('embedding length is error,{}, number of vocab is {}'.format(len(embeddings),self.args.num_vocab))
         model.set_embeddings(sess, embeddings)
 
         # set initial states

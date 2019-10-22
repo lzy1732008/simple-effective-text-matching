@@ -1,0 +1,22 @@
+实验步骤:
+1、训练自己训练好的中文glove模型
+Done
+
+2、准备好env这个文件
+准备env里面的word_index, dev, train, test这几个部分=》生成训练数据
+
+3、处理一下vocab.txt以及生成embedding.msgpack这个文件
+
+
+3、emb_glove_300d.npy这个文件是什么？
+可以跳过
+
+prepare_snli.py
+输入文件结构分析：
+env: dict_keys(['word_index', 'dev', 'train', 'test', 'pos_index', 'char_index']) 但是后面两个没有用到
+其中train这个Key对应的一个数据格式是这样的：
+[['<S>', 'Two', 'women', 'are', 'embracing', 'while', 'holding', 'to', 'go', 'packages', '.', '<E>'], ['<S>', 'The', 'sisters', 'are', 'hugging', 'goodbye', 'while', 'holding', 'to', 'go', 'packages', 'after', 'just', 'eating', 'lunch', '.', '<E>'], 1]
+vocab.txt总共36990个单词
+embedding.msgpack总共有36992行，每行代表一个词向量，其中前两行是全零
+w2idx = env['word_index']从第三个开始才是词
+因此运行prepare的代码得到的embedding.msgpack，vocab.txt,target_map.txt,以及train,dev,test这个三个数据集

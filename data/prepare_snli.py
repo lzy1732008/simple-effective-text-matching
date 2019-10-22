@@ -14,6 +14,7 @@
 # limitations under the License.
 
 
+
 import os
 import json
 import string
@@ -31,12 +32,14 @@ os.makedirs(data_dir, exist_ok=True)
 with open(os.path.join(in_dir, 'env')) as f:
     env = json.load(f)
 
+#将训练好的glove词向量以json格式存储下来
 print('convert embeddings ...')
 emb = np.load(os.path.join(in_dir, 'emb_glove_300.npy'))
 print(len(emb))
 with open(os.path.join(out_dir, 'embedding.msgpack'), 'wb') as f:
     msgpack.dump(emb.tolist(), f)
 
+#建立word2idx之间的双向映射，存储在txt文件中
 print('convert_vocab ...')
 w2idx = env['word_index']
 print(len(w2idx))
@@ -50,12 +53,13 @@ with open(os.path.join(out_dir, 'target_map.txt'), 'w') as f:
         f.write('{}\n'.format(label))
 
 # save data files
+#预处理切分好的数据集，并存储到相应的txt文件中
 punctuactions = set(string.punctuation)
 for split in ['train', 'dev', 'test']:
     labels = Counter()
     print('convert', split, '...')
     data = env[split]
-    with open(os.path.join(data_dir, f'{split}.txt'), 'w') as f_out:
+    with open(os.path.join(data_dir, '{}.txt'.format(split)), 'w') as f_out:
         for sample in data:
             a, b, label = sample
             a = a[1:-1]
@@ -69,5 +73,5 @@ for split in ['train', 'dev', 'test']:
             labels.update({label: 1})
             assert label in label_map
             label = label_map[label]
-            f_out.write(f'{a}\t{b}\t{label}\n')
+            f_out.write('{}\t{}\t{}\n'.format(a,b,label))
     print('labels:', labels)
