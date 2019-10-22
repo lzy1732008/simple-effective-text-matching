@@ -235,17 +235,17 @@ class Model:
     def load(cls, sess, model_path):
         with open(model_path + '.stat', 'rb') as f:
             checkpoint = pickle.load(f)
-            init_vars = tf.train.list_variables('models/wsfx/benchmark-0')
+
         args = checkpoint['args']
         args.summary_dir = os.path.dirname(model_path)
         args.output_dir = os.path.dirname(args.summary_dir)
         model = cls(args, sess, updates=checkpoint['updates'])
 
         print('model_path:{}'.format(model_path))
-
+        init_vars = tf.train.list_variables(args.summary_dir)
         model_vars = {re.match("^(.*):\\d+$", var.name).group(1): var for var in tf.global_variables()}
         assignment_map = {name: model_vars[name] for name, _ in init_vars if name in model_vars}
-        tf.train.init_from_checkpoint('models/wsfx/benchmark-0', assignment_map)
+        tf.train.init_from_checkpoint(args.summary_dir, assignment_map)
         sess.run(tf.global_variables_initializer())
         return model, checkpoint
 
