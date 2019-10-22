@@ -188,6 +188,8 @@ class Model:
         assert 'score' not in stats, 'metric name collides with "score"'
         eval_score = stats[self.args.metric]
         stats['score'] = eval_score
+        stats.update(metrics['auc'](outputs))
+        stats.update(metrics['f1'](outputs))
         return eval_score, stats  # first value is for early stopping
 
     def predict(self, sess, batch):
