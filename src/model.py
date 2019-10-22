@@ -235,7 +235,7 @@ class Model:
     def load(cls, sess, model_path):
         with open(model_path + '.stat', 'rb') as f:
             checkpoint = pickle.load(f)
-            init_vars = tf.train.list_variables('model/wsfx/benchmark-0')
+            init_vars = tf.train.list_variables('models/wsfx/benchmark-0')
         args = checkpoint['args']
         args.summary_dir = os.path.dirname(model_path)
         args.output_dir = os.path.dirname(args.summary_dir)
