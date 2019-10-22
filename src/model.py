@@ -240,6 +240,7 @@ class Model:
         args.output_dir = os.path.dirname(args.summary_dir)
         model = cls(args, sess, updates=checkpoint['updates'])
 
+        print('model_path:{}'.format(model_path))
         init_vars = tf.train.list_variables(model_path)
         model_vars = {re.match("^(.*):\\d+$", var.name).group(1): var for var in tf.global_variables()}
         assignment_map = {name: model_vars[name] for name, _ in init_vars if name in model_vars}
