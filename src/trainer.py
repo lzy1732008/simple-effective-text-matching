@@ -38,6 +38,7 @@ class Trainer:
         train = load_data(self.args.data_dir, 'train')
         dev = load_data(self.args.data_dir, self.args.eval_file)
         self.log(f'train ({len(train)}) | {self.args.eval_file} ({len(dev)})')
+        print('args print:', self.args)
 
         tf.reset_default_graph()
         with tf.Graph().as_default():
@@ -60,10 +61,11 @@ class Trainer:
                         for batch_id, batch in enumerate(batches):
                             stats = model.update(sess, batch)
                             self.log.update(stats)
-                            eval_per_updates = self.args.eval_per_updates \
-                                if model.updates > self.args.eval_warmup_steps else self.args.eval_per_updates_warmup
-                            if model.updates % eval_per_updates == 0 \
-                                    or (self.args.eval_epoch and batch_id + 1 == len(batches)):
+                            # eval_per_updates = self.args.eval_per_updates \
+                            #     if model.updates > self.args.eval_warmup_steps else self.args.eval_per_updates_warmup
+                            # if model.updates % eval_per_updates == 0 \
+                            #         or (self.args.eval_epoch and batch_id + 1 == len(batches)):
+                            if model.updates % 10 == 0:
                                 score, dev_stats = model.evaluate(sess, dev_batches)
                                 if score > states['best_eval']:
                                     states['best_eval'], states['best_epoch'], states['best_step'] = \
@@ -79,9 +81,13 @@ class Trainer:
                                     raise EarlyStop('[Tolerance reached. Training is stopped early.]')
                             if stats['loss'] > self.args.max_loss:
                                 raise EarlyStop('[Loss exceeds tolerance. Unstable training is stopped early.]')
+                            #alter early stop*******
+                            if model.updates - states['best_step'] > 1000:
+                                raise EarlyStop('[Loss exceeds tolerance. Unstable training is stopped early.]')
                             if stats['lr'] < self.args.min_lr - 1e-6:
                                 raise EarlyStop('[Learning rate has decayed below min_lr. Training is stopped early.]')
                         self.log.newline()
+
                     self.log('Training complete.')
                 except KeyboardInterrupt:
                     self.log.newline()

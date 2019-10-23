@@ -40,7 +40,7 @@
     },
 
     training: {
-        epochs: 30,
+        epochs: 200,
         batch_size: 128,
         grad_clipping: 5,
         lr: 1e-3,
