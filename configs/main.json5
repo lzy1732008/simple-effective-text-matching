@@ -1,11 +1,11 @@
 [
     {
-        name: 'benchmark-w2v',
+        name: 'benchmark_w2v',
         __parents__: [
             'default',
             'data/wsfx',
         ],
-        __repeat__: 5,
-        eval_file: 'test'
+        __repeat__: 10,
+        eval_file: 'test',
     }
 ]
