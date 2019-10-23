@@ -76,13 +76,11 @@ class Trainer:
                                 if self.args.save_all:
                                     model.save(states)
                                     model.save(states, name='last')
-                                if model.updates - states['best_step'] > self.args.early_stopping \
-                                        and model.updates > self.args.min_steps:
+                                # if model.updates - states['best_step'] > self.args.early_stopping \
+                                #         and model.updates > self.args.min_steps:
+                                if model.updates - states['best_step'] > 1000:
                                     raise EarlyStop('[Tolerance reached. Training is stopped early.]')
                             if stats['loss'] > self.args.max_loss:
-                                raise EarlyStop('[Loss exceeds tolerance. Unstable training is stopped early.]')
-                            #alter early stop*******
-                            if model.updates - states['best_step'] > 1000:
                                 raise EarlyStop('[Loss exceeds tolerance. Unstable training is stopped early.]')
                             if stats['lr'] < self.args.min_lr - 1e-6:
                                 raise EarlyStop('[Learning rate has decayed below min_lr. Training is stopped early.]')
