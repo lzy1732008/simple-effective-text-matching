@@ -63,9 +63,9 @@ class Trainer:
                             self.log.update(stats)
                             eval_per_updates = self.args.eval_per_updates \
                                 if model.updates > self.args.eval_warmup_steps else self.args.eval_per_updates_warmup
-                            if model.updates % eval_per_updates == 0 \
-                                    or (self.args.eval_epoch and batch_id + 1 == len(batches)):
-                            # if model.updates % 10 == 0:
+                            # if model.updates % eval_per_updates == 0 \
+                            #         or (self.args.eval_epoch and batch_id + 1 == len(batches)):
+                            if model.updates % 10 == 0 or (self.args.eval_epoch and batch_id + 1 == len(batches)):
                                 score, dev_stats = model.evaluate(sess, dev_batches)
                                 if score > states['best_eval']:
                                     states['best_eval'], states['best_epoch'], states['best_step'] = \
