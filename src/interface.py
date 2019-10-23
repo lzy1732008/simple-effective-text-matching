@@ -47,7 +47,7 @@ class Interface:
 
     def load_embeddings(self):
         """generate embeddings suited for the current vocab or load previously cached ones."""
-        embedding_file = os.path.join(self.args.output_dir, 'embedding.msgpack')
+        embedding_file = os.path.join(self.args.output_dir, 'embedding_w2v.msgpack')
         if not os.path.exists(embedding_file):
             embeddings = load_embeddings(self.args.pretrained_embeddings, self.vocab,
                                          self.args.embedding_dim, mode=self.args.embedding_mode,

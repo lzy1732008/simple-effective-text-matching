@@ -20,3 +20,6 @@ vocab.txt总共36990个单词
 embedding.msgpack总共有36992行，每行代表一个词向量，其中前两行是全零
 w2idx = env['word_index']从第三个开始才是词
 因此运行prepare的代码得到的embedding.msgpack，vocab.txt,target_map.txt,以及train,dev,test这个三个数据集
+
+
+4、修改参数变为和wsfx里面一样，替换词向量，看效果如何

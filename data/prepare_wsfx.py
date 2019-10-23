@@ -119,20 +119,22 @@ def createDataSet():
         print('labels:', labels)
 
 def createMsgpackFile():
-    fw = open(os.path.join(out_dir, 'embedding.msgpack'), 'wb')
+    fw = open(os.path.join(out_dir, 'embedding_w2v.msgpack'), 'wb')
 
-    with open(os.path.join(in_dir, 'vectors.txt'),'r', encoding='utf-8') as f:
+    with open(os.path.join(in_dir, 'vectors_w2v.txt'),'r', encoding='utf-8') as f:
          lines = f.readlines()
-         vectors = [tuple([0] * 300), tuple([0] * 300)]
-         for line in lines[:-1]:
+         vectors = [tuple([0] * 128), tuple([0] * 128)]
+         for line in lines:
              line = line.strip()
              if line != "":
                  vector = tuple(line.split()[1:])
                  vectors.append(vector)
          msgpack.dump(vectors, fw)
 
+
+
 # createMsgpackFile()
-# fr = open(os.path.join(out_dir, 'embedding.msgpack'), 'rb')
+# fr = open(os.path.join(out_dir, 'embedding_w2v.msgpack'), 'rb')
 # emb = msgpack.load(fr,encoding = 'utf-8')
 # print(len(emb))
 
