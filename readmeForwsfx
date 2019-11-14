@@ -23,3 +23,10 @@ w2idx = env['word_index']从第三个开始才是词
 
 
 4、修改参数变为和wsfx里面一样，替换词向量，看效果如何
+
+5、运行代码的方式
+首先删除models/wsfx里面的data_config.json5文件
+然后运行:
+python train.py configs/main,记得在main.json5里面指定好需要运行的configs/data里面的文件
+评估模型结果时运行:
+python evaluate.py models/wsfx/benchmark_w2v_vn/checkpoint-best data/wsfx/test.txt
