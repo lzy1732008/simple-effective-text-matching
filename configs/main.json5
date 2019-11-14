@@ -1,6 +1,6 @@
 [
     {
-        name: 'benchmark_w2v_v1',
+        name: 'benchmark_w2v_vn',
         __parents__: [
             'default',
             'data/wsfx',
