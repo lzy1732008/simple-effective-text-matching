@@ -37,7 +37,7 @@ print('convert embeddings ...')
 emb = np.load(os.path.join(in_dir, 'emb_glove_300.npy'))
 print(len(emb))
 with open(os.path.join(out_dir, 'embedding.msgpack'), 'wb') as f:
-    msgpack.dump(emb.tolist(), f)
+    msgpack.pack(emb.tolist(), f)
 
 #建立word2idx之间的双向映射，存储在txt文件中
 print('convert_vocab ...')

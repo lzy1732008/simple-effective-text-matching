@@ -9,7 +9,7 @@
         data_dir: null,
         min_df: 5,
         max_vocab: 999999, // capacity for words including out of embedding words
-        max_len: 999, // large enough number, treated as unlimited
+        max_len: 30, // large enough number, treated as unlimited
         min_len: 1,
         lower_case: true, // whether to treat the data and embedding as lowercase.
         sort_by_len: false,
