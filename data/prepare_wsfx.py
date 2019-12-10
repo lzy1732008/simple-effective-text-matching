@@ -27,6 +27,9 @@ in_dir = 'orig/WSFX'
 out_dir = '../models/wsfx'
 data_dir = 'wsfx'
 label_map = {0: '0', 1: '1'}
+stpwords = open(os.path.join(in_dir, 'stopwords.txt'),'r',encoding='utf-8').readlines()
+stpwords = list(map(lambda x: str(x).strip(), stpwords))
+stpwords = list(filter(lambda x: x != "" , stpwords))
 
 def createEnv():
     os.makedirs(out_dir, exist_ok=True)
@@ -50,7 +53,7 @@ def createEnv():
     env['train'] = train
     env['test'] = test
     env['dev'] = dev
-    with open(os.path.join(in_dir, 'env'), 'w', encoding='utf-8') as f:
+    with open(os.path.join(in_dir, 'env-stp'), 'w', encoding='utf-8') as f:
         json.dump(env, f)
 
 def processInitDataSet(inputPath):
@@ -71,19 +74,22 @@ def processInitDataSet(inputPath):
 
 def processText(line):
     initContent = line.strip()
+
     if initContent != "":
         content = jieba.cut(initContent)
         lines = list(map(lambda x: str(x).strip(), content))
-        contentcut = list(filter(lambda x: x != "", lines))
+        contentcut = list(filter(lambda x: x != "" and x not in stpwords, lines))
         contentcut.insert(0, '<S>')
         contentcut.append('<E>')
         return contentcut
     return []
 
+
+
 def createDataSet():
     os.makedirs(out_dir, exist_ok=True)
     os.makedirs(data_dir, exist_ok=True)
-    with open(os.path.join(in_dir, 'env')) as f:
+    with open(os.path.join(in_dir, 'env-stp')) as f:
         env = json.load(f)
 
     # 建立word2idx之间的双向映射，存储在txt文件中
@@ -101,7 +107,7 @@ def createDataSet():
         labels = Counter()
         print('convert', split, '...')
         data = env[split]
-        with open(os.path.join(data_dir, '{}.txt'.format(split)), 'w') as f_out:
+        with open(os.path.join(data_dir, '{}-stp.txt'.format(split)), 'w') as f_out:
             for sample in data:
                 a, b, label = sample
                 a = a[1:-1]
@@ -111,7 +117,7 @@ def createDataSet():
                 # assert all(w in w2idx for w in a) and all(w in w2idx for w in b)
                 a = ' '.join(a)
                 b = ' '.join(b)
-                assert len(a) != 0 and len(b) != 0
+                if len(a) == 0 or len(b) == 0:continue
                 labels.update({label: 1})
                 assert label in label_map
                 label = label_map[label]
