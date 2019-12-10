@@ -65,7 +65,7 @@ class Trainer:
                                 if model.updates > self.args.eval_warmup_steps else self.args.eval_per_updates_warmup
                             # if model.updates % eval_per_updates == 0 \
                             #         or (self.args.eval_epoch and batch_id + 1 == len(batches)):
-                            print('model.updates:{0}, current loss:{1}, prob:{2}'.format(model.updates, stats['loss'],))
+                            print('model.updates:{0}, current loss:{1}, prob:{2}'.format(model.updates, stats['loss'],stats['prob']))
                             if model.updates % 10 == 0 or (self.args.eval_epoch and batch_id + 1 == len(batches)):
                                 print('enter evaluation step......')
                                 score, dev_stats = model.evaluate(sess, dev_batches)
