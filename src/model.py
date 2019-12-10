@@ -141,8 +141,8 @@ class Model:
 
     def update(self, sess, batch):
         feed_dict = self.process_data(batch, training=True)
-        _, gnorm, loss, summary, lr = sess.run(
-            [self.train_op, self.gnorm, self.loss, self.summary, self.lr],
+        _, gnorm, loss, summary, lr,prob = sess.run(
+            [self.train_op, self.gnorm, self.loss, self.summary, self.lr,self.prob],
             feed_dict=feed_dict
         )
         assert gnorm >= 0, 'encounter nan in gradients.'
@@ -154,6 +154,7 @@ class Model:
             'lr': lr,
             'gnorm': gnorm,
             'summary': summary,
+            'prob':prob
         }
         return stats
 
