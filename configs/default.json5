@@ -46,7 +46,7 @@
         lr: 1e-3,
         beta1: 0.9,
         beta2: 0.999,
-        max_loss: 9999999., // tolerance for unstable training
+        max_loss: 999., // tolerance for unstable training
         lr_decay_rate: 0.95, // exp decay rate for lr
         lr_decay_samples: 128000,
         min_lr: 6e-5,

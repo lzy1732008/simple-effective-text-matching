@@ -212,7 +212,7 @@ class Model:
 
     @staticmethod
     def get_loss(logits, target):
-        losses = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=target)
+        losses = tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=target)
         return tf.reduce_mean(losses)
 
     def save(self, states, name=None):
