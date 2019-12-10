@@ -85,7 +85,6 @@ class Interface:
             target = sample['target']
             assert target in self.target_map
             processed['target'] = self.target_map.index(target)
-            print(processed['target'])
         return processed
 
     def shuffle_batch(self, data):
