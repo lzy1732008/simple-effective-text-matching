@@ -28,7 +28,7 @@ class Encoder:
                 x = mask * x
                 if i > 0:
                     x = tf.nn.dropout(x, dropout_keep_prob)
-                x = conv1d(x, self.args.hidden_size, kernel_size=self.args.kernel_size, activation=tf.nn.relu,
+                x = conv1d(x, self.args.hidden_size, kernel_size=self.args.kernel_size, activation=tf.nn.relu,\
                            name=f'cnn_{i}')
             x = tf.nn.dropout(x, dropout_keep_prob)
             return x

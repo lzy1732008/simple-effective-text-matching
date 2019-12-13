@@ -30,3 +30,5 @@ w2idx = env['word_index']从第三个开始才是词
 python train.py configs/main,记得在main.json5里面指定好需要运行的configs/data里面的文件
 评估模型结果时运行:
 python evaluate.py models/wsfx/benchmark_w2v_vn/checkpoint-best data/wsfx/test.txt
+
+python evaluate.py models/wsfx/benchmark_w2v_v1/benchmark_w2v_v1/checkpoint-best data/wsfx/test.txt

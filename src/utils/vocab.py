@@ -58,7 +58,7 @@ class Indexer:
         counter = Counter(symbols)
         symbols = sorted([t for t, c in counter.items() if c >= min_counts],
                          key=counter.get, reverse=True)
-        log(f'''{len(symbols)} symbols found: {' '.join(symbols[:15]) + ('...' if len(symbols) > 15 else '')}''')
+        # log(f'''{len(symbols)} symbols found: {' '.join(symbols[:15]) + ('...' if len(symbols) > 15 else '')}''')
         filtered = sorted(list(counter.keys() - set(symbols)), key=counter.get, reverse=True)
         if filtered:
             log('filtered classes:')
