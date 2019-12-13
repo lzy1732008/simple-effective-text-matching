@@ -63,7 +63,8 @@ class Indexer:
         if filtered:
             log('filtered classes:')
             if len(filtered) > 20:
-                log('{} ... {}'.format(' '.join(filtered[:10]), ' '.join(filtered[-10:])))
+                # log('{} ... {}'.format(' '.join(filtered[:10]), ' '.join(filtered[-10:])))
+                pass
             else:
                 log(' '.join(filtered))
             if dump_filtered:
