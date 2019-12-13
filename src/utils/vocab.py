@@ -163,20 +163,22 @@ class Vocab(RobustIndexer):
         total = sum(counter.values())
         matched = sum(counter[t] for t in tokens)
         stats = (len(tokens), len(counter), total - matched, total, (total - matched) / total * 100)
-        log('vocab coverage {}/{} | OOV occurrences {}/{} ({:.4f}%)'.format(*stats))
+        # log('vocab coverage {}/{} | OOV occurrences {}/{} ({:.4f}%)'.format(*stats))
         tokens_set = set(tokens)
         if pretrained_embeddings:
             oop_samples = sorted(list(tokens_set - wv_vocab), key=counter.get, reverse=True)
-            log('Covered by pretrained vectors {:.4f}%. '.format(len(tokens_set & wv_vocab) / len(tokens) * 100) +
-                ('outside pretrained: ' + ' '.join(oop_samples[:10]) + ' ...' if len(oop_samples) > 10 else '')
-                if oop_samples else '')
-        log('top words:\n{}'.format(' '.join(tokens[:10])))
+            # log('Covered by pretrained vectors {:.4f}%. '.format(len(tokens_set & wv_vocab) / len(tokens) * 100) +
+            #     ('outside pretrained: ' + ' '.join(oop_samples[:10]) + ' ...' if len(oop_samples) > 10 else '')
+            #     if oop_samples else '')
+        # log('top words:\n{}'.format(' '.join(tokens[:10])))
         filtered = sorted(list(counter.keys() - set(tokens)), key=counter.get, reverse=True)
         if filtered:
             if len(filtered) > 20:
-                log('filtered words:\n{} ... {}'.format(' '.join(filtered[:10]), ' '.join(filtered[-10:])))
+                # log('filtered words:\n{} ... {}'.format(' '.join(filtered[:10]), ' '.join(filtered[-10:])))
+                pass
             else:
-                log('filtered words:\n' + ' '.join(filtered))
+                # log('filtered words:\n' + ' '.join(filtered))
+                pass
             if dump_filtered:
                 with open(dump_filtered, 'w', encoding='utf-8') as f:
                     for name in filtered:
