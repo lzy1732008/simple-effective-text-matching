@@ -24,6 +24,7 @@ import tensorflow as tf
 from tensorflow.python.ops.lookup_ops import HashTable
 from tensorflow.python.ops.lookup_ops import TextFileIdTableInitializer
 from tensorflow.python.client import device_lib
+from sklearn import metrics as ms
 
 from .network import Network
 from .utils.vocab import Vocab
@@ -191,6 +192,7 @@ class Model:
         stats['score'] = eval_score
         stats.update(metrics['auc'](outputs))
         stats.update(metrics['f1'](outputs))
+        print(ms.classification_report(y_true=targets,y_pred=predictions,digits=4))
         return eval_score, stats  # first value is for early stopping
 
     def predict(self, sess, batch):
