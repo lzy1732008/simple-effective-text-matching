@@ -1,6 +1,6 @@
 [
     {
-        name: 'benchmark_w2v',
+        name: 'benchmark_w2v-qj',
         __parents__: [
             'default',
             'data/wsfx',

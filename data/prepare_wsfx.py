@@ -27,9 +27,9 @@ in_dir = 'orig/WSFX'
 out_dir = '../models/wsfx'
 data_dir = 'wsfx'
 label_map = {0: '0', 1: '1'}
-stpwords = open(os.path.join(in_dir, 'stopwords.txt'),'r',encoding='utf-8').readlines()
-stpwords = list(map(lambda x: str(x).strip(), stpwords))
-stpwords = list(filter(lambda x: x != "" , stpwords))
+# stpwords = open(os.path.join(in_dir, 'stopwords.txt'),'r',encoding='utf-8').readlines()
+# stpwords = list(map(lambda x: str(x).strip(), stpwords))
+# stpwords = list(filter(lambda x: x != "" , stpwords))
 
 def createEnv():
     os.makedirs(out_dir, exist_ok=True)
@@ -47,13 +47,13 @@ def createEnv():
             f.write('{}\n'.format(w))
 
     #建立train，Dev，test
-    train = processInitDataSet(os.path.join(in_dir, 'train-原始.txt'))
-    test = processInitDataSet(os.path.join(in_dir, 'test-原始.txt'))
-    dev = processInitDataSet(os.path.join(in_dir, 'dev-原始.txt'))
+    train = processInitDataSet(os.path.join(in_dir, 'train-qj.txt'))
+    test = processInitDataSet(os.path.join(in_dir, 'test-qj.txt'))
+    dev = processInitDataSet(os.path.join(in_dir, 'dev-qj.txt'))
     env['train'] = train
     env['test'] = test
     env['dev'] = dev
-    with open(os.path.join(in_dir, 'env-stp'), 'w', encoding='utf-8') as f:
+    with open(os.path.join(in_dir, 'env-qj'), 'w', encoding='utf-8') as f:
         json.dump(env, f)
 
 def processInitDataSet(inputPath):
@@ -64,7 +64,7 @@ def processInitDataSet(inputPath):
             line = line.strip()
             if line != '':
                 items = line.split('|')
-                assert len(items) == 4, ValueError("The number of items in this line is less than 4")
+                assert len(items) == 4, ValueError("The number of items in this line is less than 4"+line)
                 fact = processText(items[1])
                 law = processText(items[2])
                 assert items[3] in ['0', '1'], ValueError("Label is not in [0,1]!")
@@ -78,7 +78,7 @@ def processText(line):
     if initContent != "":
         content = jieba.cut(initContent)
         lines = list(map(lambda x: str(x).strip(), content))
-        contentcut = list(filter(lambda x: x != "" and x not in stpwords, lines))
+        contentcut = list(filter(lambda x: x != "", lines))
         contentcut.insert(0, '<S>')
         contentcut.append('<E>')
         return contentcut
@@ -89,7 +89,7 @@ def processText(line):
 def createDataSet():
     os.makedirs(out_dir, exist_ok=True)
     os.makedirs(data_dir, exist_ok=True)
-    with open(os.path.join(in_dir, 'env-stp')) as f:
+    with open(os.path.join(in_dir, 'env-qj')) as f:
         env = json.load(f)
 
     # 建立word2idx之间的双向映射，存储在txt文件中
@@ -103,11 +103,11 @@ def createDataSet():
     # save data files
     # 预处理切分好的数据集，并存储到相应的txt文件中
     punctuactions = set.union(set(string.punctuation), punctuation)
-    for split in ['train', 'dev', 'test']:
+    for split in ['train','test','dev']:
         labels = Counter()
         print('convert', split, '...')
         data = env[split]
-        with open(os.path.join(data_dir, '{}-stp.txt'.format(split)), 'w') as f_out:
+        with open(os.path.join(data_dir, '{}.txt'.format(split)), 'w') as f_out:
             for sample in data:
                 a, b, label = sample
                 a = a[1:-1]
@@ -136,10 +136,9 @@ def createMsgpackFile():
                  vector = tuple(line.split()[1:])
                  vectors.append(vector)
          msgpack.dump(vectors, fw)
-
-
-
-# createMsgpackFile()
+# createEnv()
+# # createMsgpackFile()
+# createDataSet()
 # fr = open(os.path.join(out_dir, 'embedding_w2v.msgpack'), 'rb')
 # emb = msgpack.load(fr,encoding = 'utf-8')
 # print(len(emb))
