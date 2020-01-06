@@ -89,7 +89,7 @@ def processText(line):
 def createDataSet():
     os.makedirs(out_dir, exist_ok=True)
     os.makedirs(data_dir, exist_ok=True)
-    with open(os.path.join(in_dir, 'env-qj')) as f:
+    with open(os.path.join(in_dir, 'env-alter-2')) as f:
         env = json.load(f)
 
     # 建立word2idx之间的双向映射，存储在txt文件中
@@ -136,9 +136,9 @@ def createMsgpackFile():
                  vector = tuple(line.split()[1:])
                  vectors.append(vector)
          msgpack.dump(vectors, fw)
-# createEnv()
+createEnv()
 # # createMsgpackFile()
-# createDataSet()
+createDataSet()
 # fr = open(os.path.join(out_dir, 'embedding_w2v.msgpack'), 'rb')
 # emb = msgpack.load(fr,encoding = 'utf-8')
 # print(len(emb))
