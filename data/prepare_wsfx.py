@@ -47,13 +47,13 @@ def createEnv():
             f.write('{}\n'.format(w))
 
     #建立train，Dev，test
-    train = processInitDataSet(os.path.join(in_dir, 'train-qj.txt'))
-    test = processInitDataSet(os.path.join(in_dir, 'test-qj.txt'))
-    dev = processInitDataSet(os.path.join(in_dir, 'dev-qj.txt'))
-    env['train'] = train
+    # train = processInitDataSet(os.path.join(in_dir, 'train-qj.txt'))
+    test = processInitDataSet(os.path.join(in_dir, 'test-init-alter-2.txt'))
+    # dev = processInitDataSet(os.path.join(in_dir, 'dev-qj.txt'))
+    # env['train'] = train
     env['test'] = test
-    env['dev'] = dev
-    with open(os.path.join(in_dir, 'env-qj'), 'w', encoding='utf-8') as f:
+    # env['dev'] = dev
+    with open(os.path.join(in_dir, 'env-alter-2'), 'w', encoding='utf-8') as f:
         json.dump(env, f)
 
 def processInitDataSet(inputPath):
@@ -103,7 +103,7 @@ def createDataSet():
     # save data files
     # 预处理切分好的数据集，并存储到相应的txt文件中
     punctuactions = set.union(set(string.punctuation), punctuation)
-    for split in ['train','test','dev']:
+    for split in ['test']:
         labels = Counter()
         print('convert', split, '...')
         data = env[split]
@@ -136,9 +136,9 @@ def createMsgpackFile():
                  vector = tuple(line.split()[1:])
                  vectors.append(vector)
          msgpack.dump(vectors, fw)
-# createEnv()
+createEnv()
 # # createMsgpackFile()
-# createDataSet()
+createDataSet()
 # fr = open(os.path.join(out_dir, 'embedding_w2v.msgpack'), 'rb')
 # emb = msgpack.load(fr,encoding = 'utf-8')
 # print(len(emb))
