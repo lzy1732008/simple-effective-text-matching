@@ -25,6 +25,7 @@ from tensorflow.python.ops.lookup_ops import HashTable
 from tensorflow.python.ops.lookup_ops import TextFileIdTableInitializer
 from tensorflow.python.client import device_lib
 from sklearn import metrics as ms
+import json
 
 from .network import Network
 from .utils.vocab import Vocab
@@ -174,6 +175,8 @@ class Model:
             predictions.extend(pred.tolist())
             targets.extend(feed_dict[self.y])
             probabilities.extend(prob.tolist())
+
+        self.checkPrediction(predictions,targets,probabilities)
         outputs = {
             'target': targets,
             'prob': probabilities,
@@ -271,3 +274,30 @@ class Model:
     def get_available_gpus():
         local_device_protos = device_lib.list_local_devices()
         return [x.name for x in local_device_protos if x.device_type == 'GPU']
+
+
+    def checkPrediction(self,pred_cls, target_y, probs):
+        test_content = open('data/test-init-alter-2.txt', 'r', encoding='utf-8').read()
+        lines = test_content.split('\n')
+        index = 0
+        law_result = {}
+        for line in lines:
+            line = line.strip()
+            if line != '':
+                items = line.split('|')
+                assert len(items) == 4, ValueError("The number of items in this line is less than 4, content:" + line)
+                fact = items[1]
+                law = items[2]
+                y = int(items[-1])
+                s = 'fact:{0}, law:{1}, pred:{2}, y:{3}'.format(fact, law, pred_cls[index], y)
+                # result.append([fact,law,pred_cls[index],y,probs[index]])
+                if law not in law_result.keys():
+                    law_result[law] = {}
+                law_result[law][fact] = [int(pred_cls[index]), int(y), list(map(str, list(probs[index])))]
+                assert y == target_y[index], ValueError(s)
+                # if target_y[index] == pred_cls[index]: right.append(s)
+                # else:wrong.append(s)
+                index += 1
+
+        with open('simpleModel_predictAna.json', 'w', encoding='utf-8') as fw:
+            json.dump(law_result, fw)
