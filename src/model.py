@@ -285,7 +285,7 @@ class Model:
             line = line.strip()
             if line != '':
                 items = line.split('|')
-                assert len(items) == 4, ValueError("The number of items in this line is less than 4, content:" + line)
+                # assert len(items) == 4, ValueError("The number of items in this line is less than 4, content:" + line)
                 fact = items[1]
                 law = items[2]
                 y = int(items[-1])
