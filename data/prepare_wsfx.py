@@ -48,12 +48,12 @@ def createEnv():
 
     #建立train，Dev，test
     # train = processInitDataSet(os.path.join(in_dir, 'train-qj.txt'))
-    test = processInitDataSet(os.path.join(in_dir, 'test-init-alter-2.txt'))
+    test = processInitDataSet(os.path.join(in_dir, 'test-init-alter-4.txt'))
     # dev = processInitDataSet(os.path.join(in_dir, 'dev-qj.txt'))
     # env['train'] = train
     env['test'] = test
     # env['dev'] = dev
-    with open(os.path.join(in_dir, 'env-alter-2'), 'w', encoding='utf-8') as f:
+    with open(os.path.join(in_dir, 'env-alter-4'), 'w', encoding='utf-8') as f:
         json.dump(env, f)
 
 def processInitDataSet(inputPath):
@@ -89,7 +89,7 @@ def processText(line):
 def createDataSet():
     os.makedirs(out_dir, exist_ok=True)
     os.makedirs(data_dir, exist_ok=True)
-    with open(os.path.join(in_dir, 'env-alter-2')) as f:
+    with open(os.path.join(in_dir, 'env-alter-4')) as f:
         env = json.load(f)
 
     # 建立word2idx之间的双向映射，存储在txt文件中

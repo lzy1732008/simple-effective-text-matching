@@ -176,7 +176,7 @@ class Model:
             targets.extend(feed_dict[self.y])
             probabilities.extend(prob.tolist())
 
-        self.checkPrediction(predictions,targets,probabilities)
+        # self.checkPrediction(predictions,targets,probabilities)
         outputs = {
             'target': targets,
             'prob': probabilities,
@@ -277,7 +277,7 @@ class Model:
 
 
     def checkPrediction(self,pred_cls, target_y, probs):
-        test_content = open('data/test-init-alter-2.txt', 'r', encoding='utf-8').read()
+        test_content = open('data/test-init-alter-4.txt', 'r', encoding='utf-8').read()
         lines = test_content.split('\n')
         index = 0
         law_result = {}
@@ -299,5 +299,5 @@ class Model:
                 # else:wrong.append(s)
                 index += 1
 
-        with open('simpleModel_predictAna.json', 'w', encoding='utf-8') as fw:
+        with open('simpleModel_predictAna-alter-4.json', 'w', encoding='utf-8') as fw:
             json.dump(law_result, fw)
