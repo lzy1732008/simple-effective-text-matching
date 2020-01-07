@@ -13,7 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
+import time
+from datetime import timedelta
 import os
 from pprint import pprint
 import tensorflow as tf
@@ -28,6 +29,7 @@ class Evaluator:
         self.data_file = data_file
 
     def evaluate(self):
+        start_time = time.time()
         data = load_data(*os.path.split(self.data_file))
 
         tf.reset_default_graph()
@@ -43,3 +45,11 @@ class Evaluator:
                 batches = interface.pre_process(data, training=False)
                 _, stats = model.evaluate(sess, batches)
                 pprint(stats)
+                time_dif = get_time_dif(start_time)
+                print("Time usage:", time_dif)
+                
+def get_time_dif(start_time):
+    """获取已使用时间"""
+    end_time = time.time()
+    time_dif = end_time - start_time
+    return timedelta(seconds=int(round(time_dif)))
