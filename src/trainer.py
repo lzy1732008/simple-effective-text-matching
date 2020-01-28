@@ -22,7 +22,7 @@ import tensorflow as tf
 from datetime import datetime
 from pprint import pformat
 from .utils.loader import load_data
-# from .utils.logger import Logger
+from .utils.logger import Logger
 from .utils.params import validate_params
 from .model import Model
 from .interface import Interface
