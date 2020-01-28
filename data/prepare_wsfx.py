@@ -35,25 +35,25 @@ def createEnv():
     os.makedirs(out_dir, exist_ok=True)
     #读取vocab.txt文件，建立word_index
     env = {}
-    with open(os.path.join(in_dir, 'vocab.txt'),'r', encoding='utf-8') as f:
+    with open(os.path.join(in_dir, 'vocab-gyshz.txt'),'r', encoding='utf-8') as f:
         lines = f.readlines()
         vocab = [w.split()[0] for w in lines if w.strip() != '']
         env["word_index"] = {w : i + 2 for i, w in enumerate(vocab)}
         env["word_index"]["<pad>"] = 0
         env["word_index"]["<unk>"] = 1
 
-    with open(os.path.join(out_dir, 'vocab.txt'), 'w', encoding='utf-8') as f:
+    with open(os.path.join(out_dir, 'vocab-gyshz.txt'), 'w', encoding='utf-8') as f:
         for w in vocab:
             f.write('{}\n'.format(w))
 
     #建立train，Dev，test
-    # train = processInitDataSet(os.path.join(in_dir, 'train-qj.txt'))
-    test = processInitDataSet(os.path.join(in_dir, 'test-init-alter-4.txt'))
-    # dev = processInitDataSet(os.path.join(in_dir, 'dev-qj.txt'))
-    # env['train'] = train
+    train = processInitDataSet(os.path.join(in_dir, 'gyshz-train-init.txt'))
+    test = processInitDataSet(os.path.join(in_dir, 'gyshz-test-init.txt'))
+    dev = processInitDataSet(os.path.join(in_dir, 'gyshz-val-init.txt'))
+    env['train'] = train
     env['test'] = test
-    # env['dev'] = dev
-    with open(os.path.join(in_dir, 'env-alter-4'), 'w', encoding='utf-8') as f:
+    env['dev'] = dev
+    with open(os.path.join(in_dir, 'gyshz-env'), 'w', encoding='utf-8') as f:
         json.dump(env, f)
 
 def processInitDataSet(inputPath):
@@ -89,7 +89,7 @@ def processText(line):
 def createDataSet():
     os.makedirs(out_dir, exist_ok=True)
     os.makedirs(data_dir, exist_ok=True)
-    with open(os.path.join(in_dir, 'env-alter-4')) as f:
+    with open(os.path.join(in_dir, 'gyshz-env')) as f:
         env = json.load(f)
 
     # 建立word2idx之间的双向映射，存储在txt文件中
@@ -103,7 +103,7 @@ def createDataSet():
     # save data files
     # 预处理切分好的数据集，并存储到相应的txt文件中
     punctuactions = set.union(set(string.punctuation), punctuation)
-    for split in ['test']:
+    for split in ['test','train','dev']:
         labels = Counter()
         print('convert', split, '...')
         data = env[split]
@@ -136,9 +136,10 @@ def createMsgpackFile():
                  vector = tuple(line.split()[1:])
                  vectors.append(vector)
          msgpack.dump(vectors, fw)
-createEnv()
-# # createMsgpackFile()
-createDataSet()
+
+# createEnv()
+# createMsgpackFile()
+# createDataSet()
 # fr = open(os.path.join(out_dir, 'embedding_w2v.msgpack'), 'rb')
 # emb = msgpack.load(fr,encoding = 'utf-8')
 # print(len(emb))

@@ -47,7 +47,7 @@ class Evaluator:
                 pprint(stats)
                 time_dif = get_time_dif(start_time)
                 print("Time usage:", time_dif)
-                
+
 def get_time_dif(start_time):
     """获取已使用时间"""
     end_time = time.time()
