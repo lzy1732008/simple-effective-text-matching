@@ -35,7 +35,7 @@ def createEnv():
     os.makedirs(out_dir, exist_ok=True)
     #读取vocab.txt文件，建立word_index
     env = {}
-    with open(os.path.join(in_dir, 'vocab-gyshz-init.txt'),'r', encoding='utf-8') as f:
+    with open(os.path.join(in_dir, 'gyshz_vocab_init.txt'),'r', encoding='utf-8') as f:
         lines = f.readlines()
         vocab = [w.split()[0] for w in lines if w.strip() != '']
         env["word_index"] = {w : i + 2 for i, w in enumerate(vocab)}
@@ -129,8 +129,8 @@ def createMsgpackFile():
 
     with open(os.path.join(in_dir, 'gyshz_vector_w2v.txt'),'r', encoding='utf-8') as f:
          lines = f.readlines()
-         # vectors = [tuple([0] * 128), tuple([0] * 128)]
-         vectors = []
+         vectors = [tuple([0] * 128), tuple([0] * 128)]
+         # vectors = []
          for line in lines:
              line = line.strip()
              if line != "":
@@ -141,6 +141,7 @@ def createMsgpackFile():
 # createEnv()
 # createMsgpackFile()
 # createDataSet()
+
 # fr = open(os.path.join(out_dir, 'embedding_w2v.msgpack'), 'rb')
 # emb = msgpack.load(fr,encoding = 'utf-8')
 # print(len(emb))

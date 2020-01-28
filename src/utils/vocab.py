@@ -239,9 +239,4 @@ class Vocab(RobustIndexer):
                 symbol = line.rstrip('\n')
                 symbol = reverse_char_map.get(symbol, symbol)
                 vocab.add_symbol(symbol)
-        print('the length of vocab:'+str(len(vocab)))
-        print('The first ele of vocab:'+vocab[0])
-        print('The second ele of vocab:'+vocab[1])
-        print('The last ele of vocab:'+vocab[len(vocab)-1])
-        assert 1==2, ValueError("Stop Here")
         return vocab
