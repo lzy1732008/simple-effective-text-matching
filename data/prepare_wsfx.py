@@ -127,7 +127,7 @@ def createDataSet():
 def createMsgpackFile():
     fw = open(os.path.join(out_dir, 'embedding_w2v.msgpack'), 'wb')
 
-    with open(os.path.join(in_dir, 'vectors_w2v.txt'),'r', encoding='utf-8') as f:
+    with open(os.path.join(in_dir, 'gyshz_vector_w2v.txt'),'r', encoding='utf-8') as f:
          lines = f.readlines()
          vectors = [tuple([0] * 128), tuple([0] * 128)]
          for line in lines:
@@ -138,7 +138,7 @@ def createMsgpackFile():
          msgpack.dump(vectors, fw)
 
 # createEnv()
-# createMsgpackFile()
+createMsgpackFile()
 # createDataSet()
 # fr = open(os.path.join(out_dir, 'embedding_w2v.msgpack'), 'rb')
 # emb = msgpack.load(fr,encoding = 'utf-8')
