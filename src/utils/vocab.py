@@ -239,5 +239,6 @@ class Vocab(RobustIndexer):
                 vocab.add_symbol(symbol)
         print('the length of vocab:'+str(len(vocab)))
         print('The first ele of vocab:'+vocab[0])
-        print('The lase ele of vocab:'+vocab[-1])
+        print('The second ele of vocab:'+vocab[1])
+        print('The last ele of vocab:'+vocab[len(vocab)-1])
         return vocab
