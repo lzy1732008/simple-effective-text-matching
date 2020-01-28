@@ -241,4 +241,5 @@ class Vocab(RobustIndexer):
         print('The first ele of vocab:'+vocab[0])
         print('The second ele of vocab:'+vocab[1])
         print('The last ele of vocab:'+vocab[len(vocab)-1])
+        assert 1==2, ValueError("Stop Here")
         return vocab
