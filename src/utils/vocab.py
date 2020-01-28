@@ -52,6 +52,8 @@ class Indexer:
         if symbol not in self.w2id:
             self.id2w[len(self.id2w)] = symbol
             self.w2id[symbol] = len(self.w2id)
+        else:
+            print("None/////////////////////")
 
     @classmethod
     def build(cls, symbols, min_counts=1, dump_filtered=None, log=print):
@@ -232,14 +234,11 @@ class Vocab(RobustIndexer):
     def load(cls, file):
         vocab = cls()
         reverse_char_map = {v: k for k, v in cls.char_map.items()}
-        count = 0
         with open(file, encoding='utf-8') as f:
             for line in f:
                 symbol = line.rstrip('\n')
                 symbol = reverse_char_map.get(symbol, symbol)
                 vocab.add_symbol(symbol)
-                count += 1
-        print(count)
         print('the length of vocab:'+str(len(vocab)))
         print('The first ele of vocab:'+vocab[0])
         print('The second ele of vocab:'+vocab[1])
