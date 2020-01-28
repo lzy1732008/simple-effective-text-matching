@@ -68,7 +68,8 @@ class Logger:
             if self.writer:
                 self.writer.add_summary(summary, updates)
             self.clips += int(stats['gnorm'] > self.grad_clipping)
-            stats_str = ' '.join(f'{key}: ' + self._format_number(val) for key, val in stats.items())
+            # stats_str = ' '.join(f'{key}: ' + self._format_number(val) for key, val in stats.items())
+            stats_str = ' '.join(f'{key}: ' + str(val) for key, val in stats.items())
             for key, val in stats.items():
                 if key not in self.train_meters:
                     self.train_meters[key] = AverageMeter()
