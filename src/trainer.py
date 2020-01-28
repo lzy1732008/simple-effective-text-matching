@@ -116,7 +116,7 @@ class Trainer:
         model = Model(self.args, sess)
         sess.run(tf.global_variables_initializer())
         embeddings = interface.load_embeddings()
-        assert len(embeddings) == self.args.num_vocab, ValueError('embedding length is error,{}, number of vocab is {}'.format(len(embeddings),self.args.num_vocab))
+        assert len(embeddings) == self.args.num_vocab + 2, ValueError('embedding length is error,{}, number of vocab is {}'.format(len(embeddings),self.args.num_vocab))
         model.set_embeddings(sess, embeddings)
 
         # set initial states

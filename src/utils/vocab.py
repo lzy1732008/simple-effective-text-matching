@@ -237,4 +237,7 @@ class Vocab(RobustIndexer):
                 symbol = line.rstrip('\n')
                 symbol = reverse_char_map.get(symbol, symbol)
                 vocab.add_symbol(symbol)
+        print('vocab is here:******************************************'+'\n'.join(vocab))
+        print('The first ele of vocab:'+vocab[0])
+        print('The lase ele of vocab:'+vocab[-1])
         return vocab
