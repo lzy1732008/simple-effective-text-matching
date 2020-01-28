@@ -88,10 +88,10 @@ class Logger:
         eval_score = valid_stats.pop('score')
         # report the exponential averaged training stats, while reporting the full dev set stats
         if self.train_meters:
-            train_stats_str = ' '.join(f'{key}: ' + self._format_number(val) for key, val in self.train_meters.items())
+            train_stats_str = ' '.join(f'{key}: ' + str(val) for key, val in self.train_meters.items())
             train_stats_str += ' ' + f'clip: {self.clips}'
             self.log.info(f'train {train_stats_str}')
-        valid_stats_str = ' '.join(f'{key}: ' + self._format_number(val) for key, val in valid_stats.items())
+        valid_stats_str = ' '.join(f'{key}: ' + str(val) for key, val in valid_stats.items())
         if eval_score > self.best_eval:
             self.best_eval_str = valid_stats_str
             self.best_eval = eval_score
